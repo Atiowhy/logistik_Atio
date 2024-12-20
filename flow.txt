@@ -1,0 +1,21 @@
+[Menu Utama]
+      |
+      +---> [Barang Masuk]
+      |          |
+      |          +---> [Daftar Barang Masuk] <--- (Tampilkan data dari DB)
+      |          |
+      |          +---> [Pencatatan Barang Masuk]
+      |                     |
+      |                     +---> [Input Data] ---> [Simpan ke DB] ---> [Update Stok] ---> [Pesan Sukses]
+      |
+      +---> [Barang Keluar]
+      |          |
+      |          +---> [Daftar Barang Keluar] <--- (Tampilkan data dari DB)
+      |          |
+      |          +---> [Pencatatan Barang Keluar]
+      |                     |
+      |                     +---> [Input Data] ---> [Simpan ke DB] ---> [Update Stok] ---> [Pesan Sukses]
+      |
+      +---> [Daftar Stok Barang] <--- (Tampilkan data dari DB)
+      |
+      +---> [Keluar] ---> [Akhiri Program]
