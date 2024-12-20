@@ -24,7 +24,8 @@
                                     <select name="kd_barang" class="form-control" id="">
                                         <option value="">--Pilih kd_barang--</option>
                                         @foreach ($dataBarang as $data)
-                                            <option value="{{ $data->kd_barang }}">{{ $data->kd_barang }}
+                                            <option value="{{ $data->kd_barang }}">
+                                                {{ $data->kd_barang }}
                                             </option>
                                         @endforeach
                                     </select>

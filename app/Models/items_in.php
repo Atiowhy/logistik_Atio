@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class items_in extends Model
 {
     protected $fillable = [
-        "kd_barang",
+        "id_barang",
         "qty",
         "origin",
         "tanggal_masuk"
@@ -17,6 +17,6 @@ class items_in extends Model
 
     public function items()
     {
-        return $this->belongsTo(items::class, 'kd_barang', 'kd_barang');
+        return $this->belongsTo(items::class, 'id_barang', 'id');
     }
 }

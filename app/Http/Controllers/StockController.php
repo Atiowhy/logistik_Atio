@@ -60,8 +60,10 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $kd_barang)
     {
-        //
+        // return $kd_barang;
+        items::findOrFail($kd_barang)->delete();
+        return redirect()->to('stock');
     }
 }

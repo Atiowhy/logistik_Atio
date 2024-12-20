@@ -26,9 +26,9 @@ class BarangMasukController extends Controller
     {
         $title = "Input Barang Masuk";
         $items = items::get()->last();
-        $id_items = $items->kd_barang ?? '';
-        $id_items++;
-        $kd_barang =  sprintf("%03s", $id_items);
+        $id_barang = $items->id ?? '';
+        $id_barang++;
+        $kd_barang = "KD" . "-" . date('dmY') . "/" . sprintf("%03s", $id_barang);
         return view('barangMasuk.create', compact('title', 'kd_barang'));
     }
 
@@ -38,7 +38,7 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         // cek barang di database
-        $items = items::where('kd_barang', $request->kd_barang)->first();
+        $items = items::where('id', $request->id)->first();
 
         if($items){
             //update qty jika barang sudah ada
@@ -46,7 +46,7 @@ class BarangMasukController extends Controller
             $items->save();
 
             $item_in = items_in::create([
-            "kd_barang" => $request->kd_barang,
+            "id_barang" => $items->id,
             "qty" => $request->qty,
             "origin" => $request->origin,
             "tanggal_masuk" => $request->tanggal_masuk,
@@ -59,11 +59,12 @@ class BarangMasukController extends Controller
             "deskripsi" => $request->deskripsi,
             "qty" => $request->qty,
             "origin" => $request->origin,
+            "foto" => $request->foto,
         ]);
 
         // simpan data ke table items_in
         $item_in = items_in::create([
-            "kd_barang" => $request->kd_barang,
+            "id_barang" => $item->id,
             "qty" => $request->qty,
             "origin" => $request->origin,
             "tanggal_masuk" => $request->tanggal_masuk,
@@ -78,7 +79,10 @@ class BarangMasukController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $title = "Detail Data";
+        $detail = items::findOrFail($id);
+        // return $detail;
+        return view('barangMasuk.detail', compact('title', 'detail'));
     }
 
     /**
@@ -86,7 +90,9 @@ class BarangMasukController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $title = "Edit Data Barang";
+        $dataBarang = items::findOrFail($id);
+        return view('barangMasuk.edit', compact('title', 'dataBarang'));
     }
 
     /**
@@ -94,7 +100,31 @@ class BarangMasukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $dataEdit = items::findOrFail($id);
+
+        // cek data foto
+        if($request->hasFile('foto')){
+            // hapus jika ada
+            if($dataEdit->foto){
+                $oldImagePath = public_path('image/'.$dataEdit->foto);
+                if(file_exists($oldImagePath)){
+                    unlink($oldImagePath);
+                }
+            }
+
+            // upload foto baru
+            $imageName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('images'), $imageName);
+            $dataEdit->foto = $imageName;
+        }
+
+        $dataEdit->nama_barang = $request->nama_barang;
+        $dataEdit->origin = $request->origin;
+        $dataEdit->qty = $request->qty;
+        $dataEdit->deskripsi = $request->deskripsi;
+        $dataEdit->save();
+
+        return redirect()->to('barangmasuk');
     }
 
     /**
@@ -102,6 +132,7 @@ class BarangMasukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        items::findOrFail($id)->delete();
+        return redirect()->to('barangmasuk');
     }
 }

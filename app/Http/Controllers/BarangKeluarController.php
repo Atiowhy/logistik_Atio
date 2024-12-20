@@ -14,7 +14,8 @@ class BarangKeluarController extends Controller
     public function index()
     {
         $title = 'Data Barang Keluar';
-        $datas = items_out::get();
+        $datas = items_out::with('items')->get();
+        // return $datas;
         return view('barangKeluar.index', compact('title', 'datas'));
     }
 
@@ -33,8 +34,13 @@ class BarangKeluarController extends Controller
      */
     public function store(Request $request)
     {
+
         // dd($request->all());
-        $item = items::find($request->kd_barang);
+        $item = items::where('kd_barang', $request->kd_barang)->first();
+// return($item);
+        if (!$item) {
+        return redirect()->back()->with('error', 'Item tidak ditemukan');
+    }
 
         if($request->qty > $item->qty){
             return redirect()->back()->with('error', 'Stok barang tidak cukup');
@@ -44,7 +50,7 @@ class BarangKeluarController extends Controller
         $item->save();
 
         items_out::create([
-            "kd_barang" => $request->kd_barang,
+            "id_barang" => $item->id,
             "qty" => $request->qty,
             "destination" => $request->destination,
             "tanggal_keluar" => $request->tanggal_keluar,

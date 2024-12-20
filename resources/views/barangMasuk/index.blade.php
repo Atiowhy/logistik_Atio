@@ -34,7 +34,19 @@
                                         <td>{{ $data->nama_barang }}</td>
                                         <td>{{ $data->qty }}</td>
                                         <td>{{ $data->origin }}</td>
-                                        <td></td>
+                                        <td class="d-flex gap-2">
+                                            <a href="{{ route('barangmasuk.edit', $data->id) }}"
+                                                class="btn btn-warning"><span class="bi bi-pencil"></span></a>
+                                            <a href="{{ route('barangmasuk.show', $data->id) }}" class="btn btn-info"><span
+                                                    class="bi bi-eye"></span></a>
+                                            <form action="{{ route('barangmasuk.destroy', $data->id) }}" method="POST"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                                @csrf
+                                                @method('delete')
+                                                <button class="btn btn-danger"><span class="bi bi-trash"></span>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

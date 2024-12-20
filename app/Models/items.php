@@ -7,17 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class items extends Model
 {
 
-    protected $table = 'items';
-    protected $primaryKey = 'kd_barang';
-    public $incrementing = false;
-    protected $keyType = 'string';
 
     protected $fillable = [
         "kd_barang",
         "nama_barang",
         "deskripsi",
         "qty",
-        "origin"
+        "origin",
+        "foto",
     ];
 
     public function itemsIn()

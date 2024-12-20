@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\items;
+use App\Models\items_in;
+use App\Models\items_out;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -12,7 +15,11 @@ class DashboardController extends Controller
     public function index()
     {
         $title = 'Dashboard';
-        return view('dashboard.index', compact('title'));
+        $datas = items::orderBy('id', 'desc')->simplePaginate(2);
+        $dataIns = items_in::with('items')->orderBy('id', 'desc')->simplePaginate(2);
+        // return $dataIns;
+        $dataOuts = items_out::with('items')->orderBy('id', 'desc')->simplePaginate(2);
+        return view('dashboard.index', compact('title', 'datas', 'dataIns', 'dataOuts'));
     }
 
     /**

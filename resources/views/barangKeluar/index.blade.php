@@ -23,18 +23,16 @@
                                     <th>Qty</th>
                                     <th>Destinasi</th>
                                     <th>Tanggal Keluar</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($datas as $key => $data)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $data->kd_barang }}</td>
+                                        <td>{{ $data->items->kd_barang }}</td>
                                         <td>{{ $data->qty }}</td>
                                         <td>{{ $data->destination }}</td>
                                         <td>{{ $data->tanggal_keluar }}</td>
-                                        <td></td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -24,6 +24,7 @@
                                     <input type="text" class="form-control" name="kd_barang" value="{{ $kd_barang }}">
                                 </div>
                             </div>
+                            <input type="hidden" name="foto" class="form-control" value="0">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="" class="form-label">Nama Barang</label>
