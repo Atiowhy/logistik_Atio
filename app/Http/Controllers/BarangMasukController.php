@@ -38,7 +38,7 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         // cek barang di database
-        $items = items::where('id', $request->id)->first();
+        $items = items::where('kd_barang', $request->kd_barang)->first();
 
         if($items){
             //update qty jika barang sudah ada
