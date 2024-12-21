@@ -43,7 +43,9 @@ class DashboardController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $title = 'Data Detail';
+        $data = items::findOrFail($id);
+        return view('dashboard.detail', compact('title', 'data'));
     }
 
     /**
