@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [DashboardController::class, 'index'])->name('/');
 
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('actionLogin', [LoginController::class, 'actionLogin'])->name('actionLogin');
@@ -23,8 +22,12 @@ Route::get('register', [RegisterController::class, 'index'])->name('register');
 Route::post('actionRegis', [RegisterController::class, 'actionRegis'])->name('actionRegis');
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('dashboard', DashboardController::class);
-Route::resource('barangmasuk', BarangMasukController::class);
-Route::resource('barangkeluar', BarangKeluarController::class);
-Route::resource('stock', StockController::class);
-Route::resource('profile', ProfileController::class);
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/', [DashboardController::class, 'index'])->name('/');
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('barangmasuk', BarangMasukController::class);
+    Route::resource('barangkeluar', BarangKeluarController::class);
+    Route::resource('stock', StockController::class);
+    Route::resource('profile', ProfileController::class);
+});
